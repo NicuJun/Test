@@ -1,54 +1,31 @@
-# React + TypeScript + Vite
+Необхідно реалізувати веб-програму для зберігання інформації про фільми. Разом з реалізацією потрібно надати документ, що пояснює архітектуру програми та містить інструкцію із запуску програми. Інформація про фільм:
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Унікальний ідентифікатор
+Назва фільму
+Рік випуску
+Формат (VHS, DVD, Blu-ray)
+Список акторів (“Ім'я та прізвище актора”)
+Функції, які має підтримувати система:
 
-Currently, two official plugins are available:
+Додати фільм
+Видалити фільм
+Показати інформацію про фільм
+Показати список фільмів, що відсортовані за назвою в алфавітному порядку
+Знайти фільм за назвою.
+Знайти фільм на ім'я актора.
+Імпорт фільмів із текстового файлу (приклад файлу надається “sample_movies.txt”). Файл повинен завантажуватись через веб-інтерфейс.
+Завдання необхідно реалізувати як односторінкову програму використовуючи ReactJS з використанням JavaScript/TypeScript, Redux/Redux Toolkit.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+В результаті потрібно надати:
 
-## Expanding the ESLint configuration
+Посилання на репозитарій у GitHub з вихідним кодом програми.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+У репозитарій із тестовим завданням має бути README із запуском програми та складанням докеру образу.
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+Програма повинна мати можливість конфігурувати API_URL, що вказує на URL бекенд програми. Наприклад, якщо програма знаходиться на іншому IP адресі, повинна бути можливість вказати його. (e.g. API_URL=http://192.168.1.44:8000/api/v1 )
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Вся конфігурація має відбуватися через змінні оточення.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Посилання на образ у DockerHub.
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+Запуск програми повинен відбуватися в один рядок, згідно з шаблоном: docker run --name movies -p 3000:3000 -e API_URL=http://localhost:8000/api/v1 your_super_account/movie
