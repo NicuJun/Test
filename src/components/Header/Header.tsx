@@ -1,4 +1,4 @@
-import React from "react"
+
 import styles from "./Header.module.css";
 import SearchBar from "./SearchBar";
 import Entry from "./Button";
@@ -16,7 +16,7 @@ function Header() {
         </section >
 
         <section className={styles.right_side}>
-          <Entry></Entry>
+          <Entry  ></Entry>
         </section>
       </nav >
     </>
