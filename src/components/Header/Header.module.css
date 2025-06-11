@@ -1,14 +1,40 @@
-*{
+* {
     padding: 0px;
     margin: 0px;
 }
 
-header{
+header {
     background-color: rgb(31, 34, 33);
-    box-shadow: 6px 4px 50px 5px gray;
     padding: 20px;
     text-align: center;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     color: rgb(247, 247, 247);
     font-size: 40px;
+
+}
+
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: rgb(33, 36, 35);
+    border-bottom: 1px solid seashell;
+    border-top: 1px solid seashell;
+}
+
+.SearchBar {
+    background-color: aliceblue;
+    border-radius: 8px;
+    padding: 10px;
+    color: black;
+    margin: 2px 10px;
+}
+
+.left_side {
+    background-color: blue;
+}
+
+.right_side {
+    background-color: aqua;
 }
