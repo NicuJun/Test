@@ -1,14 +1,17 @@
-
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 
 interface EntryProps {
-    onAccountClick: () => void;
+    onClick?: () => void;
+    name: string;
 }
-export default function Entry({ onAccountClick }: EntryProps) {
+
+export default function Entry({ onClick, name }: EntryProps) {
     return (
         <Stack spacing={2} direction="row">
-            <Button variant="contained" onClick={onAccountClick}>Аккаунт</Button>
+            <Button variant="contained" onClick={onClick}>
+                {name}
+            </Button>
         </Stack>
     );
 }

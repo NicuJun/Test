@@ -30,3 +30,8 @@ nav {
     color: black;
     margin: 2px 10px;
 }
+
+.left_side {
+    display: flex;
+    justify-content: space-between;
+}
