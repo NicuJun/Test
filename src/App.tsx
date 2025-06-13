@@ -3,7 +3,7 @@ import Footer from './components/Footer/Footer';
 import CardBody from './components/Card/Card';
 import Grid from '@mui/material/Grid';
 import { Container, Modal, Box } from '@mui/material';
-import Auth from './components/Form/Auth';
+import Auth from './components/Form/Auth'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import MoviePage from './pages/MoviePage';
 import { useState } from 'react';
@@ -11,7 +11,7 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import movies from './movies.json';
 
 function AppContent() {
-  const { openAuth, setOpenAuth } = useAuth();
+  const { openAuth, setOpenAuth, user, logout } = useAuth();
   const [searchTitle, setSearchTitle] = useState('');
   const [searchActor, setSearchActor] = useState('');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc' | null>(null);
@@ -28,7 +28,7 @@ function AppContent() {
           movie.stars.some((star) => star.toLowerCase().includes(searchActor.toLowerCase())))
     )
     .sort((a, b) => {
-      if (!sortOrder) return 0; // No sorting by default
+      if (!sortOrder) return 0;
       const titleA = a.title.toLowerCase();
       const titleB = b.title.toLowerCase();
       return sortOrder === 'asc'
@@ -39,7 +39,7 @@ function AppContent() {
   return (
     <>
       <Header
-        onAccountClick={() => setOpenAuth(true)}
+        onAccountClick={() => (user ? logout() : setOpenAuth(true))}
         onSearchTitle={setSearchTitle}
         onSearchActor={setSearchActor}
         onSort={handleSort}
@@ -55,7 +55,6 @@ function AppContent() {
             boxShadow: 24,
             p: 4,
             borderRadius: 2,
-            bgcolor: 'transparent',
           }}
         >
           <Auth />
