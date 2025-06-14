@@ -33,8 +33,9 @@
 Для запуску програми слід зробити наступне :
 1. git clone "link git repo"
 2. cd Test
-3. npm install ( провсяк випадок )
-4. npm run dev
+3. git checkout master
+4. npm install ( провсяк випадок )
+5. npm run dev
 <h1>Важливо!</h1>
 - функції додавання та видалення фільмів відбувається лише у профілі Адміна 
         email : admin@example.com
