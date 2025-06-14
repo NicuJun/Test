@@ -29,3 +29,12 @@
 Посилання на образ у DockerHub.
 
 Запуск програми повинен відбуватися в один рядок, згідно з шаблоном: docker run --name movies -p 3000:3000 -e API_URL=http://localhost:8000/api/v1 your_super_account/movie
+
+Для запуску програми слід зробити наступне :
+1. git clone "link git repo"
+2. cd Test
+3. npm install ( провсяк випадок )
+4. npm run dev
+
+Нажаль все зроблено локально та всі дані корегуються в статичних json - файлах та localStorage .
+
