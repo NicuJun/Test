@@ -1,20 +1,63 @@
+import React, { useState, useEffect } from 'react';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import CardBody from './components/Card/Card';
 import Grid from '@mui/material/Grid';
 import { Container, Modal, Box } from '@mui/material';
-import Auth from './components/Form/Auth'
+import Auth from './components/Form/Auth';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import MoviePage from './pages/MoviePage';
-import { useState } from 'react';
 import { AuthProvider, useAuth } from './context/AuthContext';
-import movies from './movies.json';
+import initialMovies from '../src/movies.json';
+
+interface Movie {
+  id: number;
+  title: string;
+  releaseYear: number;
+  format: string;
+  stars: string[];
+}
 
 function AppContent() {
-  const { openAuth, setOpenAuth, user, logout } = useAuth();
+  const { openAuth, setOpenAuth, user, logout, addMovie, deleteMovie } = useAuth();
   const [searchTitle, setSearchTitle] = useState('');
   const [searchActor, setSearchActor] = useState('');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc' | null>(null);
+  const [movies, setMovies] = useState<Movie[]>([]);
+
+  useEffect(() => {
+    const storedMovies = localStorage.getItem('movies');
+    let parsedMovies: Movie[] = storedMovies ? JSON.parse(storedMovies) : [];
+
+    const moviesToAdd = initialMovies.filter(
+      (jsonMovie) => !parsedMovies.some((m) => m.id === jsonMovie.id)
+    );
+    if (moviesToAdd.length > 0) {
+      parsedMovies = [...parsedMovies, ...moviesToAdd];
+      localStorage.setItem('movies', JSON.stringify(parsedMovies));
+      console.log('Added movies from movies.json to LocalStorage:', moviesToAdd);
+    }
+
+    setMovies(parsedMovies);
+    console.log('Loaded movies:', parsedMovies);
+
+    if (!storedMovies) {
+      console.log('Initialized LocalStorage with:', parsedMovies);
+    }
+  }, []);
+
+
+  const handleAddMovie = (newMovie: Omit<Movie, 'id'>) => {
+    const updatedMovies = addMovie(newMovie);
+    setMovies(updatedMovies);
+    console.log('Updated movies after adding:', updatedMovies);
+  };
+
+  const handleDeleteMovie = (movieId: number) => {
+    const updatedMovies = deleteMovie(movieId);
+    setMovies(updatedMovies);
+    console.log('Updated movies after deleting ID', movieId, ':', updatedMovies);
+  };
 
   const handleSort = () => {
     setSortOrder((prev) => (prev === 'asc' ? 'desc' : 'asc'));
@@ -43,6 +86,7 @@ function AppContent() {
         onSearchTitle={setSearchTitle}
         onSearchActor={setSearchActor}
         onSort={handleSort}
+        onAddMovie={handleAddMovie}
       />
       <Modal open={openAuth} onClose={() => setOpenAuth(false)}>
         <Box
@@ -73,6 +117,7 @@ function AppContent() {
                       title={movie.title}
                       format={movie.format}
                       stars={movie.stars}
+                      onDelete={handleDeleteMovie}
                     />
                   </Grid>
                 ))}

@@ -1,17 +1,29 @@
+import React, { useState } from 'react';
 import styles from "./Header.module.css";
 import SearchBar from "./SearchBar";
 import Entry from "./Button";
 import { useAuth } from "../../context/AuthContext";
+import AddMovieForm from "../AddMovieForm";
+
+interface Movie {
+  id: number;
+  title: string;
+  releaseYear: number;
+  format: string;
+  stars: string[];
+}
 
 interface HeaderProps {
   onAccountClick: () => void;
   onSearchTitle?: (searchTerm: string) => void;
   onSearchActor?: (searchTerm: string) => void;
   onSort?: () => void;
+  onAddMovie?: (movie: Omit<Movie, 'id'>) => void;
 }
 
-function Header({ onAccountClick, onSearchTitle, onSearchActor, onSort }: HeaderProps) {
-  const { user } = useAuth();
+function Header({ onAccountClick, onSearchTitle, onSearchActor, onSort, onAddMovie }: HeaderProps) {
+  const { user, isAdmin } = useAuth();
+  const [openAddMovie, setOpenAddMovie] = useState(false);
 
   return (
     <>
@@ -31,6 +43,13 @@ function Header({ onAccountClick, onSearchTitle, onSearchActor, onSort }: Header
             onSearch={onSearchActor || (() => { })}
           />
           <Entry onClick={onSort} name="Сортування А-Я...A-Z" />
+          {isAdmin && (
+            <Entry
+              onClick={() => setOpenAddMovie(true)}
+              name="Додати"
+              className={styles.greenButton}
+            />
+          )}
         </section>
         <section className={styles.right_side}>
           <Entry
@@ -40,6 +59,13 @@ function Header({ onAccountClick, onSearchTitle, onSearchActor, onSort }: Header
           />
         </section>
       </nav>
+      {isAdmin && (
+        <AddMovieForm
+          open={openAddMovie}
+          onClose={() => setOpenAddMovie(false)}
+          onAddMovie={onAddMovie}
+        />
+      )}
     </>
   );
 }

@@ -5,19 +5,30 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 
 interface CardBodyProps {
   movieId: number;
   title: string;
   format: string;
   stars: string[];
+  onDelete?: (movieId: number) => void;
 }
 
-export default function CardBody({ movieId, title, format, stars }: CardBodyProps) {
+export default function CardBody({ movieId, title, format, stars, onDelete }: CardBodyProps) {
   const navigate = useNavigate();
+  const { isAdmin } = useAuth();
 
   const handleMoreInfo = () => {
+    console.log(`Navigating to movie ID: ${movieId}`);
     navigate(`/movie/${movieId}`);
+  };
+
+  const handleDelete = () => {
+    if (window.confirm(`Ви впевнені, що хочете видалити "${title}"?`)) {
+      console.log(`Deleting movie ID: ${movieId}`);
+      onDelete?.(movieId);
+    }
   };
 
   return (
@@ -34,7 +45,7 @@ export default function CardBody({ movieId, title, format, stars }: CardBodyProp
         component="img"
         alt={`${title} poster`}
         height="200"
-        // image={`/path/to/${title.replace(/\s+/g, '-').toLowerCase()}.jpg`} // Uncomment and update with actual image path
+        // image={`/path/to/${title.replace(/\s+/g, '-').toLowerCase()}.jpg`} // Розкоментуйте та оновіть із реальним шляхом
         sx={{ objectFit: 'cover' }}
       />
       <CardContent sx={{ flexGrow: 1, overflow: 'hidden' }}>
@@ -61,15 +72,17 @@ export default function CardBody({ movieId, title, format, stars }: CardBodyProp
             textOverflow: 'ellipsis',
           }}
         >
-          Format: {format}
+          Формат: {format}
           <br />
-          Stars: {stars.join(', ')}
+          Актори: {stars.join(', ')}
         </Typography>
       </CardContent>
       <CardActions sx={{ justifyContent: 'space-between', padding: 2 }}>
-        <Button size="small" color="error">
-          Видалити
-        </Button>
+        {isAdmin && (
+          <Button size="small" color="error" onClick={handleDelete}>
+            Видалити
+          </Button>
+        )}
         <Button size="small" onClick={handleMoreInfo}>
           Більше інформації
         </Button>

@@ -122,7 +122,7 @@ function LoginLink({ setMode }: { setMode: (mode: 'login' | 'register') => void 
 function ForgotPasswordLink() {
     return (
         <Link href="#" variant="body2">
-            Forgot password?
+            {/* Just For future */}
         </Link>
     );
 }
@@ -179,7 +179,6 @@ export default function Auth() {
         const password = formData.get('password') as string;
         const remember = formData.get('remember') === 'true';
 
-        // Validate inputs
         const emailError = validateEmail(email);
         const passwordError = validatePassword(password);
         if (emailError || passwordError) {
@@ -214,7 +213,7 @@ export default function Auth() {
                 mx: 'auto',
             }}
         >
-            <Typography variant="h6" sx={{ mb: 2 }}>
+            <Typography variant="h6" sx={{ mb: 2, color: 'black' }}>
                 {mode === 'login' ? 'Login' : 'Register'}
             </Typography>
             {alert && (
